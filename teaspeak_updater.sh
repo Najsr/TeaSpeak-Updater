@@ -24,7 +24,7 @@ then
 else
         if [[ $FOLDER == */ ]]
         then
-                FOLDER=${FOLDER:0:(-1)}
+            FOLDER=${FOLDER:0:(-1)}
         fi
 fi
 
@@ -36,9 +36,9 @@ fi
 
 if [[ "$(uname -m)" == "x86_64" ]];
 then
-        arch="amd64"
+    arch="amd64"
 else
-        arch="x86"
+    arch="x86"
 fi
 
 latest_version=$(curl -k --silent https://repo.teaspeak.de/server/linux/$arch/latest)
@@ -53,22 +53,22 @@ fi
 
 if [[ -z $FORCE ]];
 then
-        read -p "An update is available, do you want to update?" -n 1 -r
-        if [[ ! $REPLY =~ ^[Yy]$ ]];
-        then
-                echo "Aborting update"
-                exit 0;
-        fi
-        echo
+	read -p "An update is available, do you want to update?" -n 1 -r
+	echo
+	if [[ ! $REPLY =~ ^[Yy]$ ]];
+	then
+		echo "Aborting update"
+		exit 0;
+	fi
 else
-        echo "Found new version ($latest_version), starting update"
+	echo "Found new version ($latest_version), starting update"
 fi
 
 echo "Checking for running server..."
 if [[ $($FOLDER/teastart.sh status) == "Server is running" ]];
 then
-echo "Server is still running! Shutting it down..."
-$FOLDER/teastart.sh stop
+	echo "Server is still running! Shutting it down..."
+	$FOLDER/teastart.sh stop
 fi
 echo "Downloading server version $latest_version";
 wget -q -O /tmp/TeaSpeak.tar.gz https://repo.teaspeak.de/server/linux/$arch/TeaSpeak-$latest_version.tar.gz;
