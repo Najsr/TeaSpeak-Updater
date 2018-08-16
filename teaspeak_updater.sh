@@ -22,7 +22,6 @@ if [ -z "$FOLDER" ]
 then
         FOLDER="$(dirname "$(readlink -f "$0")")"
 else
-        FOLDER="$1"
         if [[ $FOLDER == */ ]]
         then
                 FOLDER=${FOLDER:0:(-1)}
