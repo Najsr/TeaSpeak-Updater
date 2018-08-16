@@ -25,5 +25,5 @@ Simple to use TeaSpeak-Updater script
 
 ### Command Line Option
 
-* __-f__ - forces update (without prompt)
-* __-path path__ Sets working path for the script (otherwise executed in the location of the script)
+* __-f / --force__ - forces update (without prompt)
+* __-p path / --path path__ Sets working path for the script (otherwise executed in the location of the script)
