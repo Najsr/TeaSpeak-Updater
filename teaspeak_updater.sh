@@ -9,7 +9,7 @@ do
    	-f|--force)
    	FORCE="true"
    	;;
-   	-p=*|--FOLDER=*)
+   	-p=*|--path=*)
    	FOLDER="${i#*=}"
    	;;
    	*)
