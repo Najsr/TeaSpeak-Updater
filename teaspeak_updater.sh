@@ -65,7 +65,7 @@ current_version=${current_version:11}
 
 if [[ "$latest_version" == "$current_version" ]];
 then
-   echo "UPTODATE";
+   echo "You are already using latest version of TeaSpeak. Nothing to update :)";
    exit 0;
 fi
 
