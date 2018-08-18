@@ -105,7 +105,7 @@ then
 	echo
 	if [[ ! $REPLY =~ ^[Yy]$ ]];
 	then
-		warn "Aborting update"
+		error "Aborting update"
 		exit 0;
 	fi
 else
@@ -118,6 +118,8 @@ then
 	info "Server is still running! Shutting it down..."
 	$FOLDER/teastart.sh stop
 fi
+info "Backing up old server as TeaSpeakBackup_$current_version.tar.gz"
+tar -C $FOLDER/ -zcvf TeaSpeakBackup_$current_version.tar.gz config.yml TeaData.sqlite --overwrite >/dev/null
 info "Downloading server version $latest_version";
 wget -q -O /tmp/TeaSpeak.tar.gz https://repo.teaspeak.de/server/linux/$arch/TeaSpeak-$latest_version.tar.gz;
 info "Extracting it to $FOLDER/";
