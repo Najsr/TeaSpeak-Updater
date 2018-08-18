@@ -2,6 +2,36 @@
 #TeaSpeak updater by Nicer
 #Tested on Debian
 
+#color codes from https://raw.githubusercontent.com/Sporesirius/TeaSpeak-Installer/master/teaspeak_install.sh
+function warn() {
+    echo -e "\\033[33;1m${@}\033[0m"
+}
+
+function error() {
+    echo -e "\\033[31;1m${@}\033[0m"
+}
+
+function info() {
+    echo -e "\\033[36;1m${@}\033[0m"
+}
+
+function green() {
+    echo -e "\\033[32;1m${@}\033[0m"
+}
+
+function cyan() {
+    echo -e "\\033[36;1m${@}\033[0m"
+}
+
+function red() {
+    echo -e "\\033[31;1m${@}\033[0m"
+}
+
+function yellow() {
+    echo -e "\\033[33;1m${@}\033[0m"
+}
+
+
 #checking for parameters
 POSITIONAL=()
 while [[ $# -gt 0 ]]
@@ -48,7 +78,7 @@ fi
 
 if [ ! -f "$FOLDER/buildVersion.txt" ] 
 then
-	echo "buildVersion.txt not found, cannot proceed with update!";
+	error "buildVersion.txt not found, cannot proceed with update!";
 	exit 1;
 fi
 
@@ -65,40 +95,40 @@ current_version=${current_version:11}
 
 if [[ "$latest_version" == "$current_version" ]];
 then
-   echo "You are already using latest version of TeaSpeak. Nothing to update :)";
+   green "You are already using latest version of TeaSpeak. Nothing to update :)";
    exit 0;
 fi
 
 if [[ -z $FORCE ]];
 then
-	read -p "An update is available, do you want to update?" -n 1 -r
+	read -n 1 -r -s -p "$(yellow An update is available, do you want to update? [y/n])"
 	echo
 	if [[ ! $REPLY =~ ^[Yy]$ ]];
 	then
-		echo "Aborting update"
+		warn "Aborting update"
 		exit 0;
 	fi
 else
-	echo "Found new version ($latest_version), starting update"
+	info "Found new version ($latest_version), starting update"
 fi
 
-echo "Checking for running server..."
+info "Checking for running server..."
 if [[ $($FOLDER/teastart.sh status) == "Server is running" ]];
 then
-	echo "Server is still running! Shutting it down..."
+	info "Server is still running! Shutting it down..."
 	$FOLDER/teastart.sh stop
 fi
-echo "Downloading server version $latest_version";
+info "Downloading server version $latest_version";
 wget -q -O /tmp/TeaSpeak.tar.gz https://repo.teaspeak.de/server/linux/$arch/TeaSpeak-$latest_version.tar.gz;
-echo "Extracting it to $FOLDER/";
+info "Extracting it to $FOLDER/";
 tar -C $FOLDER/ -xzf /tmp/TeaSpeak.tar.gz --overwrite
-echo "Removing temporary file";
+info "Removing temporary file";
 rm /tmp/TeaSpeak.tar.gz
-echo "Update successfully completed!";
+green "Update successfully completed!";
 
 if [[ ! -z $START ]]
 then
-  echo "Starting server up";
+  info "Starting server up";
   $FOLDER/$START;
 fi
 exit 0;
