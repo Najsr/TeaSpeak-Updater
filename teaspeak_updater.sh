@@ -35,8 +35,6 @@ esac
 done
 set -- "${POSITIONAL[@]}" # restore positional parameters
 
-echo $START
-exit 0;
 #main
 if [ -z "$FOLDER" ]
 then
