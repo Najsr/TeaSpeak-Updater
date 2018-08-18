@@ -3,20 +3,40 @@
 #Tested on Debian
 
 #checking for parameters
-for i in "$@"
+POSITIONAL=()
+while [[ $# -gt 0 ]]
 do
-	case $i in
-   	-f|--force)
-   	FORCE="true"
-   	;;
-   	-p=*|--path=*)
-   	FOLDER="${i#*=}"
-   	;;
-   	*)
-   	;;
-	esac
-done
+key="$1"
 
+case $key in
+    -f|--force)
+    FORCE="TRUE"
+    shift # past argument
+    ;;
+    -p|--path)
+    FOLDER="$2"
+    shift # past argument
+    shift # past value
+    ;;
+    -s|--start)
+    START="$2"
+    shift # past argument
+    shift # past value
+    if [[ -z $START ]]
+    then
+      START="teastart.sh start"
+    fi
+    ;;
+    *)    # unknown option
+    POSITIONAL+=("$1") # save it in an array for later
+    shift # past argument
+    ;;
+esac
+done
+set -- "${POSITIONAL[@]}" # restore positional parameters
+
+echo $START
+exit 0;
 #main
 if [ -z "$FOLDER" ]
 then
@@ -77,4 +97,10 @@ tar -C $FOLDER/ -xzf /tmp/TeaSpeak.tar.gz --overwrite
 echo "Removing temporary file";
 rm /tmp/TeaSpeak.tar.gz
 echo "UPDATED";
+
+if [[ ! -z $START ]]
+then
+  echo "Starting server up";
+  $FOLDER/$START;
+fi
 exit 0;
