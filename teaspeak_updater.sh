@@ -94,7 +94,7 @@ echo "Extracting it to $FOLDER/";
 tar -C $FOLDER/ -xzf /tmp/TeaSpeak.tar.gz --overwrite
 echo "Removing temporary file";
 rm /tmp/TeaSpeak.tar.gz
-echo "UPDATED";
+echo "Update successfully completed!";
 
 if [[ ! -z $START ]]
 then
