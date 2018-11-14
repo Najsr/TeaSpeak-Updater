@@ -54,7 +54,7 @@ case $key in
     shift # past value
     if [[ -z $START ]]
     then
-      START="teastart.sh start"
+      START="teastart_autorestart.sh"
     fi
     ;;
     *)    # unknown option
